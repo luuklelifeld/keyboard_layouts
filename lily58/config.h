@@ -1,4 +1,4 @@
 #pragma once
 
 #define FORCE_NKRO
-#define TAPPING_TERM 175
+#define TAPPING_TERM 100
