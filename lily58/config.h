@@ -1,6 +1,7 @@
 #pragma once
 
 #define FORCE_NKRO
-#define TAPPING_TERM 150
-
 #define BOTH_SHIFTS_TURNS_ON_CAPS_WORD
+
+#define TAPPING_TERM 150
+#define CAPS_WORD_IDLE_TIMEOUT 3000

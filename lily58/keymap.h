@@ -2,6 +2,7 @@
 
 enum CustomKeycodes {
     TOGPERS = SAFE_RANGE,
+    TOGGMNG,
     MOLSHIFT,
     MORSHIFT
 };
