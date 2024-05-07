@@ -12,6 +12,7 @@
 uint8_t current_layout = _QWERTY;
 
 // symbols: ! " # $ % & ' ( ) * + , - . / : ; < = > ? @ [ \ ] ^ _ ` { | } ~ (32)
+// ! " # $ % & ' ( ) * + - = @ [ \ ] ^ _ ` { | } ~ < > ? : (on symbol layer)
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_QWERTY] = LAYOUT(
@@ -30,22 +31,22 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
     [_LOWER] = LAYOUT(
         _______    , _______    , _______    , _______    , _______    , _______    ,                           _______    , _______    , _______    , _______    , _______    , _______ ,
-        _______    , _______    , KC_HASH    , KC_LBRC    , KC_RBRC    , _______    ,                           _______    , KC_UNDS    , KC_MINUS   , KC_PLUS    , KC_ASTR    , _______ ,
-        _______    , KC_EXLM    , KC_AT      , KC_LPRN    , KC_RPRN    , KC_EQUAL   ,                           KC_LEFT    , KC_DOWN    , KC_UP      , KC_RIGHT   , KC_COLN    , _______ ,
-        _______    , _______    , KC_TILD    , KC_LCBR    , KC_RCBR    , KC_BSLS    , _______    , _______    , _______    , KC_ESC     , KC_GT      , KC_LT      , KC_QUES    , _______ ,
+        _______    , _______    , KC_7       , KC_8       , KC_9       , _______    ,                           _______    , _______    , _______    , _______    , _______    , _______ ,
+        _______    , _______    , KC_4       , KC_5       , KC_6       , KC_0       ,                           KC_LEFT    , KC_DOWN    , KC_UP      , KC_RIGHT   , _______    , _______ ,
+        _______    , _______    , KC_1       , KC_2       , KC_3       , _______    , _______    , _______    , KC_LGUI    , KC_ESC     , _______    , _______    , _______    , _______ ,
                                                _______    , _______    , _______    , _______    , KC_DEL     , _______    , _______    , _______
     ),
 	[_RAISE] = LAYOUT(
         _______    , _______    , _______    , _______    , _______    , _______    ,                           _______    , _______    , _______    , _______    , _______    , _______ ,
-        _______    , _______    , KC_CIRC    , KC_PERC    , KC_DLR     , _______    ,                           _______    , KC_AMPR    , KC_PIPE    , _______    , _______    , _______ ,
-        _______    , KC_1       , KC_2       , KC_3       , KC_4       , KC_5       ,                           KC_6       , KC_7       , KC_8       , KC_9       , KC_0       , _______ ,
-        _______    , _______    , KC_GRAVE   , KC_DQUO    , KC_QUOT    , _______    , _______    , _______    , _______    , KC_LGUI    , _______    , _______    , _______    , _______ ,
+        _______    , KC_DLR     , KC_QUOT    , KC_LBRC    , KC_RBRC    , KC_PIPE    ,                           _______    , KC_HASH    , KC_MINUS   , KC_ASTR    , KC_BSLS    , _______ ,
+        _______    , KC_AT      , KC_DQUO    , KC_LPRN    , KC_RPRN    , KC_AMPR    ,                           KC_CIRC    , KC_EQUAL   , KC_EXLM    , KC_PLUS    , KC_COLN    , _______ ,
+        _______    , KC_PERC    , KC_GRAVE   , KC_LCBR    , KC_RCBR    , KC_TILD    , _______    , _______    , _______    , KC_UNDS    , KC_LT      , KC_GT      , KC_QUES    , _______ ,
                                                _______    , _______    , _______    , KC_ENT     , _______    , _______    , _______    , _______
     ),
     [_ADJUST] = LAYOUT(
         TOGPERS    , _______    , _______    , _______    , _______    , _______    ,                           _______    , _______    , _______    , _______    , _______    , _______ ,
-        TOGGMNG    , _______    , _______    , _______    , _______    , _______    ,                           _______    , _______    , _______    , _______    , _______    , _______ ,
-        _______    , _______    , _______    , _______    , _______    , _______    ,                           _______    , _______    , _______    , _______    , _______    , _______ ,
+        TOGGMNG    , _______    , _______    , _______    , _______    , _______    ,                           _______    , KC_VOLD    , KC_VOLU    , _______    , _______    , _______ ,
+        _______    , KC_F1      , KC_F2      , KC_F3      , KC_F4      , KC_F5      ,                           KC_F6      , KC_F7      , KC_F8      , KC_F9      , KC_F10     , _______ ,
         _______    , _______    , _______    , _______    , _______    , _______    , _______    , _______    , _______    , _______    , _______    , _______    , _______    , _______ ,
                                                _______    , _______    , _______    , _______    , _______    , _______    , _______    , _______
     ),
@@ -57,6 +58,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                                _______    , _______    , _______    , _______    , _______    , _______    , _______    , _______
     ),
 };
+
 
 layer_state_t layer_state_set_user(layer_state_t state) {
   return update_tri_layer_state(state, _LOWER, _RAISE, _ADJUST);
@@ -75,10 +77,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
             break;
         case MOLSHIFT:
-            mod_tap_layer_hold(KC_LSFT, _LOWER, record, &lsft_timer);
+            mod_tap_layer_hold(_LOWER, record, lsft_keycode, &lsft_timer, &lsft_count);
             break;
         case MORSHIFT:
-            mod_tap_layer_hold(KC_RSFT, _RAISE, record, &rsft_timer);
+            mod_tap_layer_hold(_RAISE, record, rsft_keycode, &rsft_timer, &rsft_count);
     }
     return true;
 }
