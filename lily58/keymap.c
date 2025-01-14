@@ -30,7 +30,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_LOWER] = LAYOUT(
         _______    , _______    , _______    , _______    , _______    , _______    ,                           _______    , _______    , _______    , _______    , _______    , _______ ,
         _______    , _______    , KC_7       , KC_8       , KC_9       , _______    ,                           _______    , _______    , _______    , _______    , _______    , _______ ,
-        _______    , _______    , KC_4       , KC_5       , KC_6       , KC_0       ,                           KC_LEFT    , KC_DOWN    , KC_UP      , KC_RIGHT   , _______    , _______ ,
+        KC_COLN    , _______    , KC_4       , KC_5       , KC_6       , KC_0       ,                           KC_LEFT    , KC_DOWN    , KC_UP      , KC_RIGHT   , KC_COLN    , _______ ,
         _______    , _______    , KC_1       , KC_2       , KC_3       , _______    , _______    , _______    , KC_LGUI    , KC_ESC     , _______    , _______    , _______    , _______ ,
                                                _______    , _______    , _______    , _______    , KC_DEL     , _______    , _______    , _______
     ),
@@ -59,13 +59,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     clear_weak_mods();
     
     if (record->event.pressed && (layer_state_is(_LOWER) || layer_state_is(_RAISE))) {
-        hasSentLayeredKeycode = true; 
+        has_sent_layered_keycode = true; 
     }
 
     switch (keycode) {
         case KC_A ... KC_Z:
-            if (shouldShiftNextKey) {
-                shouldShiftNextKey = false;
+            if (should_shift_next_key) {
+                should_shift_next_key = false;
 
                 if (timer_elapsed(lsft_timer) < ONESHOT_TIMEOUT) {
                     add_weak_mods(MOD_BIT(KC_LSFT));
@@ -130,19 +130,19 @@ void mod_tap_layer_hold(uint8_t tapLayer, keyrecord_t *record, uint16_t keycode,
     uint16_t time_elapsed = timer_elapsed(*timer);
 
     if (record->event.pressed) {
-        hasSentLayeredKeycode = false;
+        has_sent_layered_keycode = false;
         if (time_elapsed > TAPPING_TERM) {
             *count = 0;
         }
 
         *timer = record->event.time;
         *count += 1;
-        bool isShiftHeld = false;
+        bool is_shift_held = false;
 
         if (*count == 2) {
             // double tap hold
             register_code(keycode);
-            isShiftHeld = true;
+            is_shift_held = true;
         }
 
         if (!isShiftHeld) {
@@ -153,9 +153,9 @@ void mod_tap_layer_hold(uint8_t tapLayer, keyrecord_t *record, uint16_t keycode,
     } else {
         layer_off(tapLayer);
 
-        if (time_elapsed < TAPPING_TERM && *count == 1 && !hasSentLayeredKeycode) {
+        if (time_elapsed < TAPPING_TERM && *count == 1 && !has_sent_layered_keycode) {
             // shift the next key
-            shouldShiftNextKey = true;
+            should_shift_next_key = true;
         }
 
         if (*count == 2) {

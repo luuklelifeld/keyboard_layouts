@@ -14,8 +14,8 @@ uint16_t rsft_keycode = KC_RSFT;
 uint16_t rsft_timer = 0;
 uint8_t rsft_count = 0;
 
-bool shouldShiftNextKey = false;
-bool hasSentLayeredKeycode = false;
+bool should_shift_next_key = false;
+bool has_sent_layered_keycode = false;
 
 void set_persistent_default(int layer);
 
