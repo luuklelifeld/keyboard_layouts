@@ -145,7 +145,7 @@ void mod_tap_layer_hold(uint8_t tapLayer, keyrecord_t *record, uint16_t keycode,
             is_shift_held = true;
         }
 
-        if (!isShiftHeld) {
+        if (!is_shift_held) {
             // regular hold
             layer_on(tapLayer);
         }
