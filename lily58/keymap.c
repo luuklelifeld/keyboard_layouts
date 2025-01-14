@@ -81,6 +81,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case KC_A ... KC_Z:
             if (shouldShiftNextKey) {
+                shouldShiftNextKey = false;
+
                 if (timer_elapsed(lsft_timer) < ONESHOT_TIMEOUT) {
                     add_weak_mods(MOD_BIT(KC_LSFT));
                 }
@@ -88,8 +90,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 if (timer_elapsed(rsft_timer) < ONESHOT_TIMEOUT) {
                     add_weak_mods(MOD_BIT(KC_RSFT));
                 }
-                
-                shouldShiftNextKey = false;
             }
             break;
         case TOGPERS:
