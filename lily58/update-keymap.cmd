@@ -1,2 +1,0 @@
-del /S /Q C:\Users\luukl\qmk_firmware\keyboards\splitkb\aurora\lily58\keymaps\luuklelifeld
-xcopy /s C:\Users\luukl\dev\personal\keyboard_layouts\lily58 C:\Users\luukl\qmk_firmware\keyboards\splitkb\aurora\lily58\keymaps\luuklelifeld
